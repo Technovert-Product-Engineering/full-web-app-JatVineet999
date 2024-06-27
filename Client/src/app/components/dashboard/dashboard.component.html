@@ -1,0 +1,13 @@
+<section class="dashboard-container">
+  <app-welcome-greeting></app-welcome-greeting>
+  <div class="tasks-container">
+    <app-task-header class="task-header"></app-task-header>
+    <app-task-list
+      (openEditModal)="handleOpenEditModal($event)"
+      class="task-list"
+    ></app-task-list>
+    <app-progress-statistics
+      class="progress-statistics"
+    ></app-progress-statistics>
+  </div>
+</section>

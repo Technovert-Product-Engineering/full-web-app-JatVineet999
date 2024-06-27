@@ -1,0 +1,11 @@
+.task-info-container {
+  width: 68.94vw;
+  margin: 0 5.41666667vw;
+}
+
+@media (max-width: 970px) {
+  .task-info-container {
+    width: 90vw;
+    margin: 0 auto;
+  }
+}

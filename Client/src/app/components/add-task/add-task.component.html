@@ -1,0 +1,15 @@
+<section class="modal-container" *ngIf="isOpen">
+  <form class="add-task-modal flex-column">
+    <input type="text" id="title" placeholder="Add title" [(ngModel)]="title" name="title"
+      [ngClass]="{ error: titleError }" />
+    <span *ngIf="titleError" class="error-message">{{ titleError }}</span>
+    <textarea id="description" placeholder="Add description" [(ngModel)]="description" name="description"
+      [ngClass]="{ error: descriptionError }"></textarea>
+    <span *ngIf="descriptionError" class="error-message">{{ descriptionError }}</span>
+
+    <div class="modal-buttons">
+      <button class="cancel-button" (click)="closeAddTaskModal()">Cancel</button>
+      <button class="save-button" (click)="handleForm()">Save</button>
+    </div>
+  </form>
+</section>

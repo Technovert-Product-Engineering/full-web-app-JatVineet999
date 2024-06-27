@@ -1,0 +1,19 @@
+<aside class="sidebar">
+  <div class="content">
+    <h1 class="logo">To-Do App</h1>
+    <app-add-task-btn (openModal)="openAddTaskModal()"></app-add-task-btn>
+    <nav class="navigation">
+      <ul>
+        <li routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">
+          <a routerLink="/dashboard">Dashboard</a>
+        </li>
+        <li routerLinkActive="active-link">
+          <a routerLink="/tasks/active">Active</a>
+        </li>
+        <li routerLinkActive="active-link">
+          <a routerLink="/tasks/completed">Completed</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</aside>

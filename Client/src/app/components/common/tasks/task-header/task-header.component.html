@@ -1,0 +1,7 @@
+<header class="header">
+  <h1 class="todays-heading">{{ heading }}</h1>
+  <div class="delete-and-date">
+    <button class="delete-all" (click)="onDeleteAllTasks()">Delete All</button>
+    <time class="date" [attr.datetime]="currentDate">{{ currentDate }}</time>
+  </div>
+</header>

@@ -1,0 +1,37 @@
+<header class="desktop-header">
+  <h1>{{ headerTitle }}</h1>
+  <div class="logo">To-Do App</div>
+  <div class="btn-container">
+    <app-add-task-btn
+      class="add-task-btn-container"
+      (openModal)="openAddTaskModal()"
+    ></app-add-task-btn>
+    <button class="sign-out-button" (click)="signOut()">
+      Sign out
+      <span class="icon">
+        <img src="./assets/images/logout-icon.svg" alt="Logout Icon" />
+      </span>
+    </button>
+  </div>
+</header>
+
+<div class="dropdown-menu">
+  <div class="dropdown">
+    <div
+      class="dropdown-btn"
+      (keypress)="toggleDropdown()"
+      (click)="toggleDropdown()"
+    >
+      <a>{{ selectedComponent }}</a>
+      <img src="./assets/images/arrow-down-icon.svg" alt="down arrow" />
+    </div>
+    <div class="dropdown-content" *ngIf="isDropdownOpen">
+      <a
+        *ngFor="let link of unUsedLink"
+        (click)="selectOption(link)"
+        [routerLink]="link.link"
+        >{{ link.optionName }}</a
+      >
+    </div>
+  </div>
+</div>

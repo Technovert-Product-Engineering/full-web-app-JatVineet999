@@ -1,0 +1,12 @@
+<div class="container">
+  <aside class="sidebar-container">
+    <app-sidebar (openModal)="openAddTaskModal()"></app-sidebar>
+  </aside>
+  <main class="main-content">
+    <app-desktop-header class="header-container" (openModal)="openAddTaskModal()"></app-desktop-header>
+    <section class="page-content">
+      <router-outlet (activate)="onRouterOutletActivate($event)"></router-outlet>
+    </section>
+  </main>
+</div>
+<app-add-task [isOpen]="isAddTaskModalOpen" [taskData]="taskData" (close)="closeAddTaskModal()"></app-add-task>

@@ -1,0 +1,60 @@
+.add-task-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5vw;
+  width: 16.5vw;
+  max-width: 220px;
+  height: 6.72vh;
+  background: #ffffff;
+  color: #251814;
+  box-shadow: 0px 0px 1.39rem rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  font-family: "Lexend", sans-serif;
+  font-weight: 400;
+  line-height: 1.6rem;
+  font-size: 1.4rem;
+  margin: 2vh 0 4.17vh 0;
+  cursor: pointer;
+  border: none;
+}
+
+.add-task-btn img {
+  width: 100%;
+  height: 100%;
+}
+
+.add-task-btn span {
+  background: #ba5112;
+  border-radius: 50%;
+  width: 1.75rem;
+  height: 1.75rem;
+}
+
+@media (max-width: 970px) {
+  .add-task-btn {
+    width: 22vw;
+    max-width: 22rem;
+    height: 3.5rem;
+  }
+}
+
+@media (max-width: 700px) {
+  .add-task-btn {
+    width: 100%;
+    font-size: small;
+  }
+  .add-task-btn span {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+}
+@media (max-width: 450px) {
+  .add-task-btn span {
+    width: 1.1rem;
+    height: 1.1rem;
+  }
+  .add-task-btn {
+    height: 2.5rem;
+  }
+}

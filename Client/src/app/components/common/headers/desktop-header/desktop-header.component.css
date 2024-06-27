@@ -1,0 +1,243 @@
+.desktop-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  padding: 1.5rem 2.3rem;
+}
+
+.desktop-header h1 {
+  font-size: 28px;
+  line-height: 35px;
+  font-family: "Lexend", sans-serif;
+  color: #251814;
+  font-weight: 400;
+}
+
+.logo {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 9vh;
+  color: #ba5112;
+  background: #ffffff;
+  font-family: "Lexend", sans-serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 1.25;
+  text-align: center;
+  margin: 0 0 1.39rem 0.5rem;
+  border-radius: 12px;
+}
+
+.add-task-btn-container {
+  display: none;
+}
+
+.sign-out-button {
+  background-color: #d62828;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  font-family: "Lexend", sans-serif;
+  font-weight: 400;
+  cursor: pointer;
+  display: flex;
+  gap: 1rem;
+  height: 3rem;
+  width: 8rem;
+  white-space: nowrap;
+  max-height: 52px;
+  max-width: 145px;
+  padding: 1.5vw 1vw 1.5vw 1vw;
+  align-items: center;
+  justify-content: center;
+}
+
+.sign-out-button:hover {
+  background-color: #b22222;
+}
+
+.sign-out-button .icon {
+  align-self: center;
+}
+
+.dropdown-btn img {
+  margin-right: 10px;
+  width: 4%;
+}
+
+.dropdown {
+  background-color: #edb046;
+  position: relative;
+  width: 85%;
+  margin-top: 10px;
+  border-radius: 5px;
+  display: none;
+}
+
+.dropdown-btn {
+  display: flex;
+  justify-content: space-between;
+  color: #ffffff;
+  width: auto;
+  cursor: pointer;
+  border-radius: 5px 5px 0 0;
+  text-decoration: none;
+  align-content: center;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  width: 100%;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  border-radius: 0px 0px 5px 5px;
+  background-color: #ffffff;
+}
+
+.dropdown-btn a,
+.dropdown-content a {
+  font-size: 22px;
+  color: black;
+  padding: 4px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+  text-transform: capitalize;
+}
+
+.dropdown-content a:hover {
+  background-color: #ffffff;
+  border-radius: 0px 0px 10px 0px;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown:hover .dropdown-btn {
+  background-color: #edb046;
+}
+
+@media (max-width: 970px) {
+  .desktop-header {
+    display: flex;
+    grid-area: header;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 0;
+  }
+  .dropdown-menu {
+    display: flex;
+    grid-area: dropdown;
+    align-items: center;
+    justify-content: center;
+  }
+  .dropdown-btn img {
+    width: 2vh;
+  }
+  .dropdown-btn {
+    width: 97vw;
+  }
+  .dropdown {
+    width: 89%;
+    display: flex;
+    height: 3rem;
+    border-radius: 12px;
+  }
+  .desktop-header h1 {
+    display: none;
+  }
+  .dropdown-content a {
+    display: flex;
+  }
+  .btn-container {
+    width: 35vw;
+    gap: 3vw;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    flex-direction: row;
+    align-items: baseline;
+  }
+
+  .logo {
+    display: flex;
+    justify-content: flex-start;
+    max-width: 30vw;
+    margin-right: 1rem;
+    white-space: nowrap;
+    padding-right: 0;
+  }
+
+  .add-task-btn-container {
+    display: flex;
+    width: 11rem;
+    max-width: 11rem;
+  }
+  .dropdown-content {
+    top: 6vh;
+  }
+}
+
+@media (max-width: 700px) {
+  .sign-out-button {
+    font-size: 10px;
+    gap: 0.5vw;
+    padding: 1.5vw 0.8vw 1.5vw 0.8vw;
+  }
+  .add-task-btn-container {
+    width: 7rem;
+  }
+  .desktop-header {
+    padding-right: 1.2rem;
+    padding-left: 1.2rem;
+    justify-content: flex-start;
+  }
+
+  .btn-container {
+    width: 69vw;
+    display: flex;
+    align-content: center;
+    justify-content: flex-end;
+  }
+  .sign-out-button {
+    max-width: 6rem;
+  }
+  .logo {
+    font-size: 1.9rem;
+    margin-right: 0;
+    max-width: 25vw;
+  }
+  .dropdown-btn a,
+  .dropdown-content a {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 450px) {
+  .sign-out-button {
+    width: 19.5vw;
+    height: 5.5vh;
+  }
+  .add-task-btn-container {
+    width: 29vw;
+    max-width: 7rem;
+  }
+  .dropdown-btn a, .dropdown-content a{
+    font-size: 0.7rem;
+  }
+  .dropdown{
+    height: 2rem;
+  }
+  .logo {
+    font-size: 1.4rem;
+    max-width: 33vw;
+  }
+}
