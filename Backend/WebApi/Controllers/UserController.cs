@@ -21,10 +21,9 @@ namespace WebApi.Controllers
         }
 
         [HttpPost("signup")]
-        public async Task<IActionResult> SignUp([FromBody] AddUserDto userData)
+        public async Task<IActionResult> SignUp([FromBody] CreateUser userData)
         {
-            try
-            {
+           
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState);
 
@@ -32,37 +31,24 @@ namespace WebApi.Controllers
                 if (result)
                     return StatusCode(201, "User created successfully");
                 return Conflict("User already exists");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                return StatusCode(500, "Internal server error");
-            }
+          
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> LogIn([FromBody] AddUserDto userData)
+        public async Task<IActionResult> LogIn([FromBody] CreateUser userData)
         {
-            try
-            {
-                if (!ModelState.IsValid)
+               if (!ModelState.IsValid)
                     return BadRequest(ModelState);
 
-                UserDto? userFound = await _userService.LogIn(userData);
+                GetUser? userFound = await _userService.LogIn(userData);
                 if (userFound != null)
                 {
                     string token = GenerateToken(userFound);
                     return Ok(token);
                 } // Return token or success message
                 return Unauthorized("Invalid username or password");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                return StatusCode(500, "Internal server error");
-            }
         }
-        private string GenerateToken(UserDto userData)
+        private string GenerateToken(GetUser userData)
         {
 
             var securityKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(_config["Jwt:key"]!));

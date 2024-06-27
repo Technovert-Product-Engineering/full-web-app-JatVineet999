@@ -18,7 +18,7 @@ namespace Application.Services
             _mapper = mapper;
         }
 
-        public async Task<bool> SignUp(AddUserDto userData)
+        public async Task<bool> SignUp(CreateUser userData)
         {
 
             if (await _userRepo.GetUserByUsernameAsync(userData.Username!) != null)
@@ -31,16 +31,14 @@ namespace Application.Services
             return true;
         }
 
-        public async Task<UserDto?> LogIn(AddUserDto userData)
+        public async Task<GetUser?> LogIn(CreateUser userData)
         {
             var user = await _userRepo.GetUserByUsernameAsync(userData.Username!);
             if (user == null || !BCrypt.Net.BCrypt.Verify(userData.Password, user.PasswordHash))
             {
-                return null; // Return null if user is not found or password does not match
+                return null; 
             }
-
-            // Return the mapped UserDto if credentials are valid
-            var userDto = _mapper.Map<UserDto>(user);
+            var userDto = _mapper.Map<GetUser>(user);
             return userDto;
         }
 

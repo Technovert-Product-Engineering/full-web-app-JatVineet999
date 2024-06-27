@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Application.Dto.User
 {
-    public class AddUserDto
+    public class CreateUser
     {
      
         [Required(ErrorMessage = "Username is required.")]

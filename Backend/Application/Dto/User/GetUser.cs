@@ -1,6 +1,6 @@
 namespace Application.Dto.User
 {
-    public class UserDto:AddUserDto
+    public class GetUser : CreateUser
     {
         public int UserID { get; set; }
     }

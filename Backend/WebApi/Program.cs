@@ -99,6 +99,7 @@ app.UseCors("AllowAllOrigins");
 app.UseHttpsRedirection();
 app.UseAuthentication();  // Ensure authentication is used before authorization
 app.UseAuthorization();
+app.UseMiddleware<GlobalExceptionHandling>();
 app.MapControllers();
 
 app.Run();

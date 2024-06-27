@@ -3,6 +3,7 @@ using Application.Interfaces;
 using AutoMapper;
 using Infrastructure.Interfaces;
 using Infrastructure.Models;
+using Task = Application.Dto.Tasks.Task;
 
 namespace Application.Services
 {
@@ -17,66 +18,38 @@ namespace Application.Services
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<ViewTasksDto>> ViewTasks(int userId)
+        public async Task<IEnumerable<GetTask>> ViewTasks(int userId)
         {
-            try
-            {
-                var tasks = await _tasksRepo.GetTasksByUserIdAsync(userId);
-                return _mapper.Map<IEnumerable<ViewTasksDto>>(tasks);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error viewing tasks", ex);
-            }
+            var tasks = await _tasksRepo.GetTasksByUserIdAsync(userId);
+            return _mapper.Map<IEnumerable<GetTask>>(tasks);
         }
 
-        public async Task<bool> AddTask(AddTaskDto  newTaskData)
+        public async Task<bool> AddTask(CreateTask newTaskData)
         {
-            try
-            {
-                var task = _mapper.Map<Tasks>(newTaskData);
-                await _tasksRepo.AddTaskAsync(task);
-                return true;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error adding task", ex);
-            }
+            var task = _mapper.Map<Tasks>(newTaskData);
+            await _tasksRepo.AddTaskAsync(task);
+            return true;
         }
 
-        public async Task<bool> EditTask(int taskId, TasksDto updateTaskData )
+        public async Task<bool> EditTask(int taskId, Task updateTaskData)
         {
-            try
-            {
-                var existingTask = await _tasksRepo.GetTaskByIdAsync(taskId);
-                if (existingTask == null)
-                    return false;
+            var existingTask = await _tasksRepo.GetTaskByIdAsync(taskId);
+            if (existingTask == null)
+                return false;
 
-                _mapper.Map(updateTaskData, existingTask);
-                await _tasksRepo.UpdateTaskAsync(existingTask);
-                return true;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error editing task", ex);
-            }
+            _mapper.Map(updateTaskData, existingTask);
+            await _tasksRepo.UpdateTaskAsync(existingTask);
+            return true;
         }
 
         public async Task<bool> DeleteTask(int taskId)
         {
-            try
-            {
-                var task = await _tasksRepo.GetTaskByIdAsync(taskId);
-                if (task == null)
-                    return false;
+            var task = await _tasksRepo.GetTaskByIdAsync(taskId);
+            if (task == null)
+                return false;
 
-                await _tasksRepo.DeleteTaskAsync(taskId);
-                return true;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error deleting task", ex);
-            }
+            await _tasksRepo.DeleteTaskAsync(taskId);
+            return true;
         }
     }
 }

@@ -3,6 +3,7 @@ using Application.Dto.Tasks;
 using Application.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Task = Application.Dto.Tasks.Task;
 
 namespace WebApi.Controllers
 {
@@ -18,77 +19,70 @@ namespace WebApi.Controllers
             _tasksService = tasksService;
         }
 
-        [HttpGet]
+        [HttpGet("tasks")]
         public async Task<IActionResult> GetTasksByUserId()
         {
-            try
+            var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == "UserID");
+            if (userIdClaim == null)
             {
-                int userID = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
-                IEnumerable<ViewTasksDto> tasks = await _tasksService.ViewTasks(userID);
-                return Ok(tasks);
+                return Unauthorized("UserID not found in token.");
             }
-            catch (Exception ex)
+
+            if (!int.TryParse(userIdClaim.Value, out int userID))
             {
-                Console.WriteLine(ex.Message);
-                return StatusCode(500, "Internal server error");
+                return Unauthorized("Invalid UserID in token.");
             }
+
+            IEnumerable<GetTask> tasks = await _tasksService.ViewTasks(userID);
+            return Ok(tasks);
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddTask([FromBody] AddTaskDto newTaskData)
+        public async Task<IActionResult> AddTask([FromBody] CreateTask newTaskData)
         {
-            try
+            var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == "UserID");
+            if (userIdClaim == null)
             {
-                if (!ModelState.IsValid)
-                    return BadRequest(ModelState);
+                return Unauthorized("UserID not found in token.");
+            }
 
-                bool result = await _tasksService.AddTask(newTaskData);
-                if (result)
-                    return StatusCode(201, "Task added successfully");
-                return BadRequest("Failed to add task");
-            }
-            catch (Exception ex)
+            if (!int.TryParse(userIdClaim.Value, out int userID))
             {
-                Console.WriteLine(ex.Message);
-                return StatusCode(500, "Internal server error");
+                return Unauthorized("Invalid UserID in token.");
             }
+            newTaskData.UserID = userID;
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            bool result = await _tasksService.AddTask(newTaskData);
+            if (result)
+                return StatusCode(201, new { message = "Task added successfully" });
+
+            return BadRequest(new { message = "Failed to add task" });
         }
 
-        [HttpPut("{taskId}")]
-        public async Task<IActionResult> EditTask(int taskId, [FromBody] TasksDto updateTaskData)
-        {
-            try
-            {
-                if (!ModelState.IsValid)
-                    return BadRequest(ModelState);
 
-                bool result = await _tasksService.EditTask(taskId, updateTaskData);
-                if (result)
-                    return Ok("Task updated successfully");
-                return NotFound("Task not found");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                return StatusCode(500, "Internal server error");
-            }
+        [HttpPut("{taskId}")]
+        public async Task<IActionResult> EditTask(int taskId, [FromBody] Task updateTaskData)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            bool result = await _tasksService.EditTask(taskId, updateTaskData);
+            if (result)
+                return Ok(new { message = "Task updated successfully" });
+            return NotFound(new { message = "Task not found" });
         }
 
         [HttpDelete("{taskId}")]
         public async Task<IActionResult> DeleteTask(int taskId)
         {
-            try
-            {
-                bool result = await _tasksService.DeleteTask(taskId);
-                if (result)
-                    return Ok("Task deleted successfully");
-                return NotFound("Task not found");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                return StatusCode(500, "Internal server error");
-            }
+            bool result = await _tasksService.DeleteTask(taskId);
+            if (result)
+                return Ok(new { message = "Task deleted successfully" });
+            return NotFound(new { message = "Task not found" });
         }
+
     }
 }
