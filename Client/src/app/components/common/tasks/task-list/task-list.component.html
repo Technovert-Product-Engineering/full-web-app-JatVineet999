@@ -1,47 +1,33 @@
 <section #tasksContainer class="tasks" style="position: relative">
-  <div
-    class="task"
-    *ngFor="let task of filteredTasks"
-    [ngStyle]="{ 'background-color': task.isCompleted ? '#EDB046' : 'initial' }"
-    (click)="showTaskDetail(task, $event)"
-  >
+  <div class="task" *ngFor="let task of filteredTasks"
+    [ngStyle]="{ 'background-color': task.isCompleted ? '#EDB046' : 'initial' }" (click)="showTaskDetail(task, $event)">
     <div class="checklist">
-      <div
-        class="checkbox-icon-container"
-        (click)="toggleTaskCompletion(task, $event)"
-      >
-        <img
-          [src]="
+      <div class="checkbox-icon-container" (click)="toggleTaskCompletion(task, $event)">
+        <img [src]="
             task.isCompleted
               ? './assets/images/check-box-completed-task-icon.svg'
               : './assets/images/check-box-active-task.svg'
-          "
-          class="checkbox-icon"
-        />
+          " class="checkbox-icon" />
       </div>
       <h2 class="title-of-task">{{ task.title }}</h2>
     </div>
 
-    <div
-      class="detail-box"
-      [ngStyle]="{ display: clickedTask === task.taskID ? 'block' : 'none' }"
-      *ngIf="clickedTask === task.taskID && selectedTask"
-    >
-      <div
-        class="task-box"
-        [ngStyle]="{
+    <div class="checklist" *ngIf="filteredTasks.length === 0">
+      <h2 class="title-of-task">NO TASK TO SHOW</h2>
+    </div>
+
+
+    <div class="detail-box" [ngStyle]="{ display: clickedTask === task.taskID ? 'block' : 'none' }"
+      *ngIf="clickedTask === task.taskID && selectedTask">
+      <div class="task-box" [ngStyle]="{
           'background-color': selectedTask.isCompleted ? '#EDB046' : '#FFFFFF'
-        }"
-      >
+        }">
         <div class="task-detail">
           <div class="title">
             <h4 class="task-title">{{ selectedTask.title }}</h4>
-            <p
-              class="task-added-time"
-              [ngStyle]="{
+            <p class="task-added-time" [ngStyle]="{
                 color: selectedTask.isCompleted ? '#BA5112' : '#b5b5b5'
-              }"
-            >
+              }">
               {{ getElapsedTime(selectedTask.createdAt) }}
             </p>
           </div>
@@ -51,35 +37,23 @@
           </div>
 
           <div class="btn btn-container">
-            <div
-              class="checkbox-icon-container"
-              (click)="toggleTaskCompletion(selectedTask, $event)"
-            >
-              <img
-                [src]="
+            <div class="checkbox-icon-container" (click)="toggleTaskCompletion(selectedTask, $event)">
+              <img [src]="
                   selectedTask.isCompleted
                     ? './assets/images/check-box-completed-task-icon.svg'
                     : './assets/images/check-box-active-task.svg'
-                "
-                class="checkbox-icon"
-              />
+                " class="checkbox-icon" />
             </div>
             <div class="btn modify-btn">
-              <div
-                class="edit-icon"
-                (click)="editTask(selectedTask)"
-                *ngIf="!selectedTask.isCompleted"
-              >
+              <div class="edit-icon" (click)="editTask(selectedTask)" *ngIf="!selectedTask.isCompleted">
                 <img src="./assets/images/edit-pen.svg" />
               </div>
               <div class="delete-icon" (click)="deleteTask(selectedTask)">
-                <img
-                  [src]="
+                <img [src]="
                     selectedTask.isCompleted
                       ? './assets/images/bin-dark.svg'
                       : './assets/images/deleted-bin.svg'
-                  "
-                />
+                  " />
               </div>
             </div>
           </div>

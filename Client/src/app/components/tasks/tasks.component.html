@@ -1,4 +1,5 @@
 <section class="task-info-container">
-  <app-task-header (deleteAllTasks)="handleDeleteAllTasks()" ></app-task-header>
-  <app-task-list (openEditModal)="handleOpenEditModal($event)"></app-task-list>
+  <app-task-header (dateChanged)="handleDateChanged($event)"
+    (deleteAllTasks)="handleDeleteAllTasks()"></app-task-header>
+  <app-task-list [selectedDate]="selectedDate" (openEditModal)="handleOpenEditModal($event)"></app-task-list>
 </section>

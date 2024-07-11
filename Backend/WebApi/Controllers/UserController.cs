@@ -23,30 +23,31 @@ namespace WebApi.Controllers
         [HttpPost("signup")]
         public async Task<IActionResult> SignUp([FromBody] CreateUser userData)
         {
-           
-                if (!ModelState.IsValid)
-                    return BadRequest(ModelState);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
-                bool result = await _userService.SignUp(userData);
-                if (result)
-                    return StatusCode(201, "User created successfully");
-                return Conflict("User already exists");
-          
+            bool result = await _userService.SignUp(userData);
+            if (result) // Assuming result contains the created user data or null if the user already exists
+            {
+                return StatusCode(201, new { message = "User created successfully", user = result });
+            }
+            return Conflict(new { message = "User already exists" });
         }
+
 
         [HttpPost("login")]
         public async Task<IActionResult> LogIn([FromBody] CreateUser userData)
         {
-               if (!ModelState.IsValid)
-                    return BadRequest(ModelState);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
-                GetUser? userFound = await _userService.LogIn(userData);
-                if (userFound != null)
-                {
-                    string token = GenerateToken(userFound);
-                    return Ok(token);
-                } // Return token or success message
-                return Unauthorized("Invalid username or password");
+            GetUser? userFound = await _userService.LogIn(userData);
+            if (userFound != null)
+            {
+                string token = GenerateToken(userFound);
+                return Ok(token);
+            } // Return token or success message
+            return Unauthorized("Invalid username or password");
         }
         private string GenerateToken(GetUser userData)
         {

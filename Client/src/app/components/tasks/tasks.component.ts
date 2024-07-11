@@ -13,6 +13,8 @@ import { GetTask } from '../../models/get-task';
 export class TasksComponent {
   @Output() openEditModal = new EventEmitter<any>();
   @ViewChild(TaskListComponent) taskListComponent!: TaskListComponent;
+  selectedDate: Date = new Date();
+
 
   handleOpenEditModal(task: GetTask) {
     this.openEditModal.emit(task);
@@ -20,5 +22,12 @@ export class TasksComponent {
 
   handleDeleteAllTasks() {
     this.taskListComponent.deleteAllFilteredTasks();
+  }
+
+  handleDateChanged(date: Date) {
+    this.selectedDate = date;
+    if (this.taskListComponent) {
+      this.taskListComponent.handleDateChanged(date);
+    }
   }
 }

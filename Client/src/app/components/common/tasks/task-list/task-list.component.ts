@@ -1,9 +1,10 @@
-import { Component, ElementRef, EventEmitter, HostListener, OnInit, Output, ViewChild } from '@angular/core';
-import { TokenService } from '../../../../services/token.service';
-import { TaskService } from '../../../../services/task.service';
+import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GetTask } from '../../../../models/get-task';
+import { TaskService } from '../../../../services/task.service';
+import { Observable } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-task-list',
@@ -14,19 +15,24 @@ import { GetTask } from '../../../../models/get-task';
 })
 export class TaskListComponent implements OnInit {
   tasks: GetTask[] = [];
-  selectedTask: GetTask| null = null;
+  selectedTask: GetTask | null = null;
   clickedTask: number | null = null;
   filteredTasks: GetTask[] = [];
 
   @Output() openEditModal = new EventEmitter<any>();
   @ViewChild('tasksContainer', { static: false }) tasksContainer?: ElementRef;
+  @Input() selectedDate: Date;
 
   constructor(
-    private tokenService: TokenService,
     private taskService: TaskService,
     private route: ActivatedRoute,
-    private router: Router
-  ) { }
+    private router: Router,
+    private toastr: ToastrService
+  ) {
+    // Initialize selectedDate with the current date
+    this.selectedDate = new Date();
+    // this.filteredTasks = this.taskService.filteredTasks$;
+  }
 
   ngOnInit(): void {
     this.route.url.subscribe(urlSegments => {
@@ -37,28 +43,34 @@ export class TaskListComponent implements OnInit {
     this.taskService.tasks$.subscribe({
       next: (tasks) => {
         this.tasks = tasks;
-        this.sortTasks();
-        this.filterTasks(this.route.snapshot.url.join('/'));
+        this.filterTasks(this.route.snapshot.url.join('/'), this.selectedDate);
       },
       error: (error) => {
         console.error('Failed to fetch tasks', error);
       }
     });
 
-    // Initial load of tasks
+    this.taskService.filteredTasks$.subscribe({
+      next: (filteredTasks: GetTask[]) => {
+        this.filteredTasks = filteredTasks;
+      },
+      error: (error) => {
+        console.error('Failed to fetch tasks', error);
+      }
+    });
+
     this.taskService.getTasksOfUser().subscribe();
   }
 
-  filterTasks(filter: string = ''): void {
-    if (filter === 'tasks/active') {
-      this.filteredTasks = this.tasks.filter(task => task.isCompleted === false);
-    } else if (filter === 'tasks/completed') {
-      this.filteredTasks = this.tasks.filter(task => task.isCompleted === true);
-    } else {
-      this.filteredTasks = this.tasks;
+  ngOnChanges(): void {
+    if (this.selectedDate) {
+      this.filterTasks(this.route.snapshot.url.join('/'), this.selectedDate);
     }
   }
 
+  filterTasks(filter: string = '', date: Date | null = null): void {
+    this.taskService.filterTasks(filter, date);
+  }
   showTaskDetail(task: GetTask, event: MouseEvent): void {
     if (this.clickedTask === task.taskID) {
       this.clickedTask = null; // Close the detail box if clicking the same task
@@ -90,7 +102,7 @@ export class TaskListComponent implements OnInit {
       this.taskService.deleteTask(task.taskID).subscribe({
         next: () => {
           this.selectedTask = null;
-          console.log(`Task ${task.taskID} deleted successfully`);
+          console.log(`Task deleted successfully`);
         },
         error: (error) => {
           console.error('Failed to delete task', error);
@@ -98,18 +110,18 @@ export class TaskListComponent implements OnInit {
       });
     }
   }
-
   deleteAllFilteredTasks(): void {
     const taskIds = this.filteredTasks.map(task => task.taskID);
     this.taskService.deleteAllTasks(taskIds).subscribe({
       next: () => {
-        console.log('All filtered tasks deleted successfully');
+        this.toastr.success('All filtered tasks deleted successfully');
       },
       error: (error) => {
-        console.error('Failed to delete all filtered tasks', error);
+        this.toastr.error('Failed to delete all filtered tasks');
       }
     });
   }
+
 
   toggleTaskCompletion(task: GetTask, event: MouseEvent): void {
     event.stopPropagation();
@@ -122,11 +134,12 @@ export class TaskListComponent implements OnInit {
     this.taskService.updateTask(task.taskID, updatedTask).subscribe({
       next: () => {
         task.isCompleted = !task.isCompleted;
-        this.filterTasks(this.route.snapshot.url.join('/'));
+        this.toastr.success(`Task ${task.isCompleted ? 'Completed' : 'Active'} successfully`);
+        this.filterTasks(this.route.snapshot.url.join('/'), this.selectedDate);
       },
       error: (error) => {
-        console.error('Failed to update task', error);
-        task.isCompleted = !task.isCompleted; // Revert on error
+        this.toastr.error('Failed to update status of task');
+        task.isCompleted = !task.isCompleted;
       }
     });
   }
@@ -135,19 +148,15 @@ export class TaskListComponent implements OnInit {
     this.selectedTask = null;
   }
 
-  private sortTasks(): void {
-    this.tasks.sort((a, b) => {
-      if (a.isCompleted === b.isCompleted) {
-        return 0; 
-      }
-      return a.isCompleted ? 1 : -1; 
-    });
-  }
-
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent): void {
     if (this.tasksContainer && !this.tasksContainer.nativeElement.contains(event.target as Node)) {
       this.closeTaskDetail();
     }
+  }
+
+  handleDateChanged(date: Date): void {
+    this.selectedDate = date;
+    this.filterTasks(this.route.snapshot.url.join('/'), date);
   }
 }

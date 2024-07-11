@@ -22,6 +22,7 @@
 
 .checkbox-icon {
   width: 1.8rem;
+  cursor: pointer;
   height: auto;
 }
 
@@ -133,6 +134,9 @@
   line-height: 2.5rem;
   color: #251814;
   margin: 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
   line-break: anywhere;
 }
 
@@ -168,20 +172,25 @@
   .task {
     padding: 0.5rem;
   }
+
   .title {
     gap: 0;
   }
+
   .title-of-task {
     font-size: 1rem;
     line-height: 1rem;
   }
+
   .task-title {
     font-size: 1.2rem;
     line-height: 1.2rem;
   }
+
   .task-detail {
     gap: 0.4rem;
   }
+
   .task-added-time {
     font-size: 0.6rem;
     line-height: 1.2rem;
@@ -190,14 +199,17 @@
   .description {
     gap: 0.1rem;
   }
+
   .desc-title {
     font-size: 0.82rem;
     line-height: 1rem;
   }
+
   .task-desc {
     font-size: 0.7rem;
     line-height: 1rem;
   }
+
   .checkbox-icon,
   .edit-icon img,
   .delete-icon img {
@@ -209,16 +221,20 @@
   .task {
     height: 1.4rem;
   }
+
   .title-of-task {
     font-size: 0.85rem;
   }
+
   .detail-box {
     width: 53.4vw;
   }
+
   .task-title {
     font-size: 1rem;
     line-height: 1rem;
   }
+
   .task-added-time {
     font-size: 0.55rem;
     line-height: 0.8rem;
@@ -228,10 +244,12 @@
     font-size: 0.72rem;
     line-height: 0.8rem;
   }
+
   .task-desc {
     font-size: 0.6rem;
     line-height: 0.8rem;
   }
+
   .checkbox-icon,
   .edit-icon img,
   .delete-icon img {

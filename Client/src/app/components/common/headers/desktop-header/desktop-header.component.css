@@ -4,6 +4,10 @@
   align-items: center;
   text-align: center;
   padding: 1.5rem 2.3rem;
+  z-index: 10;
+  position: fixed;
+  background: white;
+  width: 70.5vw;
 }
 
 .desktop-header h1 {
@@ -127,36 +131,40 @@
 
 @media (max-width: 970px) {
   .desktop-header {
-    display: flex;
-    grid-area: header;
-    justify-content: space-between;
-    align-items: center;
+    width: 89.334vw;
     padding-bottom: 0;
   }
+
   .dropdown-menu {
     display: flex;
     grid-area: dropdown;
     align-items: center;
     justify-content: center;
   }
+
   .dropdown-btn img {
     width: 2vh;
   }
+
   .dropdown-btn {
     width: 97vw;
   }
+
   .dropdown {
     width: 89%;
     display: flex;
     height: 3rem;
     border-radius: 12px;
   }
+
   .desktop-header h1 {
     display: none;
   }
+
   .dropdown-content a {
     display: flex;
   }
+
   .btn-container {
     width: 35vw;
     gap: 3vw;
@@ -181,10 +189,12 @@
     width: 11rem;
     max-width: 11rem;
   }
+
   .dropdown-content {
     top: 6vh;
   }
 }
+
 
 @media (max-width: 700px) {
   .sign-out-button {
@@ -192,9 +202,11 @@
     gap: 0.5vw;
     padding: 1.5vw 0.8vw 1.5vw 0.8vw;
   }
+
   .add-task-btn-container {
     width: 7rem;
   }
+
   .desktop-header {
     padding-right: 1.2rem;
     padding-left: 1.2rem;
@@ -207,14 +219,17 @@
     align-content: center;
     justify-content: flex-end;
   }
+
   .sign-out-button {
     max-width: 6rem;
   }
+
   .logo {
     font-size: 1.9rem;
     margin-right: 0;
     max-width: 25vw;
   }
+
   .dropdown-btn a,
   .dropdown-content a {
     font-size: 1rem;
@@ -226,18 +241,26 @@
     width: 19.5vw;
     height: 5.5vh;
   }
+
   .add-task-btn-container {
     width: 29vw;
     max-width: 7rem;
   }
-  .dropdown-btn a, .dropdown-content a{
+
+  .dropdown-btn a, .dropdown-content a {
     font-size: 0.7rem;
   }
-  .dropdown{
+
+  .dropdown {
     height: 2rem;
   }
+
   .logo {
     font-size: 1.4rem;
     max-width: 33vw;
+  }
+
+  .desktop-header {
+    width: 92%;
   }
 }

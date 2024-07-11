@@ -16,7 +16,7 @@ export class ProgressStatisticsComponent implements OnInit {
   constructor(private taskService: TaskService) { }
 
   ngOnInit(): void {
-    this.taskService.tasks$.subscribe({
+    this.taskService.filteredTasks$.subscribe({
       next: (tasks) => {
         const { completedPercentage, activePercentage } = this.taskService.calculatePercentages(tasks);
         this.completedPercentage = completedPercentage;

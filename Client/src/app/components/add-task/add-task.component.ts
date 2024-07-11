@@ -5,6 +5,7 @@ import { TaskService } from '../../services/task.service';
 import { TokenService } from '../../services/token.service';
 import { CreateTask } from '../../models/create-task';
 import { GetTask } from '../../models/get-task';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-add-task',
@@ -25,7 +26,8 @@ export class AddTaskComponent implements OnChanges {
 
   constructor(
     private taskService: TaskService,
-    private tokenService: TokenService
+    private tokenService: TokenService,
+    private toastr: ToastrService
   ) { }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -47,9 +49,12 @@ export class AddTaskComponent implements OnChanges {
     this.taskService.addTask(newTask).subscribe({
       next: () => {
         this.closeAddTaskModal();
+        this.toastr.success('Task added successfully');
+
       },
       error: (error) => {
         console.error('Failed to add task', error);
+        this.toastr.error('Failed to add task');
       }
     });
   }
@@ -60,9 +65,11 @@ export class AddTaskComponent implements OnChanges {
       this.taskService.updateTask(this.taskData.taskID, updatedTask).subscribe({
         next: () => {
           this.closeAddTaskModal();
+          this.toastr.success('Task updated successfully');
         },
         error: (error) => {
           console.error('Failed to update task', error);
+          this.toastr.error('Failed to update task');
         }
       });
     }

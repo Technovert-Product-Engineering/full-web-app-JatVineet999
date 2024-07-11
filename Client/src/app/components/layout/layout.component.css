@@ -38,10 +38,6 @@
 .header-container {
   display: grid;
   grid-area: dashboard-header;
-  position: fixed;
-  background: white;
-  width: -webkit-fill-available;
-  z-index: 1000000;
 }
 
 @media (max-width: 970px) {

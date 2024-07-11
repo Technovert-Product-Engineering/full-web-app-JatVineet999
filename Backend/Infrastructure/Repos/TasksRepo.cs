@@ -16,7 +16,10 @@ namespace Infrastructure.Repos
 
         public async Task<IEnumerable<Tasks>> GetTasksByUserIdAsync(int userId)
         {
-            return await _context.Tasks.Where(t => t.UserID == userId).ToListAsync();
+            return await _context.Tasks
+                .Where(t => t.UserID == userId)
+                .OrderBy(t => t.IsCompleted) 
+                .ToListAsync();
         }
 
         public async Task<Tasks?> GetTaskByIdAsync(int id)
@@ -26,15 +29,15 @@ namespace Infrastructure.Repos
 
         public async Task AddTaskAsync(Tasks task)
         {
-            task.CreatedAt = DateTime.UtcNow;
-            task.ModifiedAt = DateTime.UtcNow;
+            task.CreatedAt = DateTime.Now;
+            task.ModifiedAt = DateTime.Now;
             await _context.Tasks.AddAsync(task);
             await _context.SaveChangesAsync();
         }
 
         public async Task UpdateTaskAsync(Tasks task)
         {
-            task.ModifiedAt = DateTime.UtcNow;
+            task.ModifiedAt = DateTime.Now;
             _context.Tasks.Update(task);
             await _context.SaveChangesAsync();
         }

@@ -20,24 +20,24 @@ export const routes: Routes = [
         path: 'signup', component: UserAuthComponent
     },
     {
-        // canActivate: [authGuard],
+        canActivate: [authGuard],
         path: '',
         component: LayoutComponent,
         children: [
             {
-                // canActivate: [authGuard],
+                canActivate: [authGuard],
                 path: 'dashboard', component: DashboardComponent
             },
             {
-                // canActivate: [authGuard],
+                canActivate: [authGuard],
                 path: 'tasks', component: TasksComponent
             },
             {
-                // canActivate: [authGuard],
+                canActivate: [authGuard],
                 path: 'tasks/active', component: TasksComponent, data: { filter: 'active' }
             },
             {
-                // canActivate: [authGuard],
+                canActivate: [authGuard],
                 path: 'tasks/completed', component: TasksComponent, data: { filter: 'completed' }
             },
         ]

@@ -1,22 +1,37 @@
-import { DatePipe } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs';
 import { TaskService } from '../../../../services/task.service';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatNativeDateModule } from '@angular/material/core';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-task-header',
   standalone: true,
-  imports: [],
+  imports: [
+    CommonModule,
+    MatDatepickerModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatNativeDateModule,
+    FormsModule
+  ],
   providers: [DatePipe],
   templateUrl: './task-header.component.html',
-  styleUrl: './task-header.component.css'
+  styleUrls: ['./task-header.component.css']
 })
 export class TaskHeaderComponent implements OnInit {
   @Output() deleteAllTasks = new EventEmitter<void>();
+  @Output() dateChanged = new EventEmitter<Date>();
 
   currentDate: string;
   heading: string;
+  datepickerVisible = false;
+  selectedDate: Date;
 
   constructor(
     private datePipe: DatePipe,
@@ -24,7 +39,8 @@ export class TaskHeaderComponent implements OnInit {
     private taskService: TaskService,
     private activatedRoute: ActivatedRoute
   ) {
-    this.currentDate = this.datePipe.transform(new Date(), 'EEEE, dd MMMM yyyy')!;
+    this.selectedDate = new Date();
+    this.currentDate = this.datePipe.transform(this.selectedDate, 'EEEE, dd MMMM yyyy')!;
     this.heading = "Today's Tasks";
   }
 
@@ -40,6 +56,24 @@ export class TaskHeaderComponent implements OnInit {
 
   onDeleteAllTasks(): void {
     this.deleteAllTasks.emit();
+  }
+  onDateChange(date: Date): void {
+    this.selectedDate = date;
+    this.currentDate = this.datePipe.transform(this.selectedDate, 'EEEE, dd MMMM yyyy')!;
+    const today = this.datePipe.transform(new Date(), 'EEEE, dd MMMM yyyy')!;
+
+    if (this.currentDate === today) {
+      this.heading = "Today's Tasks";
+    } else {
+      this.heading = "All Tasks";
+    }
+    console.log("header:",this.selectedDate);
+    this.dateChanged.emit(this.selectedDate);
+    this.datepickerVisible = false;
+  }
+
+  toggleDatepicker(): void {
+    this.datepickerVisible = !this.datepickerVisible;
   }
 
   updateHeading(): void {
