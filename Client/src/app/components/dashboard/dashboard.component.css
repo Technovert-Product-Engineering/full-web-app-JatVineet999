@@ -1,0 +1,71 @@
+:root {
+  font-size: 16px;
+}
+
+.dashboard-container {
+  display: grid;
+  grid-template-rows: 17.625rem 1fr;
+  grid-template-areas: "welcome""tasks";
+  width: 66.9vw;
+  margin: 0 5.41666667vw;
+  height: 51.875rem;
+  order: 1;
+  gap: 2.25rem;
+  opacity: 1;
+}
+
+.tasks-container {
+  grid-area: tasks;
+  display: grid;
+  grid-template-columns: 78% 22%;
+  grid-template-areas:
+    "task-header task-header"
+    "task-list progress-statistics";
+  height: 100%;
+}
+
+.task-header {
+  display: grid;
+  grid-area: task-header;
+}
+
+.task-list {
+  grid-area: task-list;
+  padding: 1rem;
+  overflow-y: auto;
+}
+
+.progress-statistics {
+  grid-area: progress-statistics;
+  padding: 1rem;
+  overflow-y: auto;
+  width: 100%;
+}
+
+@media (max-width: 970px) {
+  .dashboard-container {
+    width: 90vw;
+    margin: 0 auto;
+  }
+
+  .tasks-container {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto 1fr;
+    grid-template-areas:
+      "progress-statistics"
+      "task-header"
+      "task-list";
+  }
+
+  .progress-statistics {
+    flex-direction: row;
+    margin-bottom: 3vh;
+    padding: 0;
+  }
+}
+
+@media (max-width: 450px) {
+  .dashboard-container {
+    grid-template-rows: 8.625rem 1fr;
+  }
+}

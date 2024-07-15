@@ -1,0 +1,12 @@
+<header class="header">
+  <h1 class="todays-heading">{{ heading }}</h1>
+  <div class="delete-and-date">
+    <button class="delete-all" (click)="onDeleteAllTasks()">Delete All</button>
+    <time class="date" [attr.datetime]="currentDate">{{ currentDate }}</time>
+    <!-- <div class="dateFieldContainer"> -->
+      <input matInput [matDatepicker]="picker" (dateChange)="onDateChange($event.value)" class="datePickerField">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </div>
+  <!-- </div> -->
+</header>

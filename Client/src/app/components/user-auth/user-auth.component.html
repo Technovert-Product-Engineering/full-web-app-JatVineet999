@@ -1,0 +1,55 @@
+<section class="container" [ngClass]="{ 'sign-in-bg': !isSignUp }">
+  <div class="main" [style.background]="isSignUp ? '#fcbf49' : '#ffffff'">
+    <div class="content">
+      <header class="title">
+        <h1 [style.color]="isSignUp ? '#ffffff' : '#BA5112'">To-Do App</h1>
+        <p [style.color]="isSignUp ? '#ffffff' : '#251814'">
+          Start organizing your life day by day
+        </p>
+      </header>
+      <form [formGroup]="authForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <input id="username" formControlName="username" type="text"
+            [placeholder]="isSignUp ? 'Username' : 'Enter your username'" />
+          <div *ngIf="
+              authForm.get('username')?.invalid &&
+              authForm.get('username')?.touched
+            " class="error">
+            Username is required 
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="password-container">
+            <input id="password" formControlName="password" [type]="passwordFieldType"
+              [placeholder]="isSignUp ? 'Password' : 'Enter your password'" />
+            <img class="toggle-password" [src]="
+                passwordFieldType === 'password'
+                  ? 'assets/images/password_hidden.svg'
+                  : 'assets/images/password_visible.svg'
+              " (click)="togglePasswordVisibility()" alt="Toggle Password Visibility" />
+          </div>
+          <div *ngIf="
+              authForm.get('password')?.invalid &&
+              authForm.get('password')?.touched
+            " class="error pass-error">
+            Password is required 
+          </div>
+        </div>
+
+        <button type="submit" [disabled]="authForm.invalid" [ngStyle]="{
+            'background-color': isSignUp ? '#BA5112' : '#EDB046',
+            color: isSignUp ? 'white' : '#251814'
+          }">
+          {{ isSignUp ? "Sign Up" : "Sign In" }}
+        </button>
+      </form>
+      <p class="toggle-auth" [style.color]="isSignUp ? '#ffffff' : '#251814'">
+        {{ isSignUp ? "Already have an account?" : "Don't have an account?" }}
+        <a (click)="toggleAuthMode()">{{
+          isSignUp ? "Sign in here." : "Sign up here."
+        }}</a>
+      </p>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,158 @@
+.progress-stats {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0;
+  gap: 2.778vw;
+  width: 13.194vw;
+}
+
+.completed,
+.active {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  align-items: center;
+  padding: 0;
+  gap: 0.694vw;
+  isolation: isolate;
+  width: 13.056vw;
+  height: 14.5vw;
+  border-radius: 0.75rem;
+  justify-content: center;
+}
+
+.completed {
+  background: #ba5112;
+}
+
+.active {
+  background: #edb046;
+}
+
+.complete-stats,
+.active-stats {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  gap: 1.7vw;
+  width: 11.028vw;
+  height: 9.45vh;
+  z-index: 2;
+}
+
+.icon {
+  width: 3.889vw;
+  height: 3.889vw;
+  margin: 0;
+  align-self: center;
+}
+
+.icon img {
+  width: 100%;
+  height: 100%;
+}
+
+.stats {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0;
+  gap: 0.278vw;
+  width: 11.028vw;
+  height: 8.889vh;
+}
+
+.percentage {
+  width: 5.139vw;
+  height: 4.5vh;
+  font-family: "Lexend", sans-serif;
+  font-style: normal;
+  margin: 0;
+  font-weight: 700;
+  font-size: 2.5vw;
+  line-height: 2.5rem;
+  color: #ffffff;
+}
+
+.active-stats .percentage {
+  width: 4vw;
+  align-self: center;
+}
+
+.description {
+  width: 11vw;
+  height: 1.389vh;
+  font-family: "Lexend", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  margin: 0;
+  font-size: 1.25vw;
+  text-align: center;
+  line-height: 1.25rem;
+  color: #ffffff;
+}
+
+.active-stats .description {
+  width: 8vw;
+}
+
+@media (max-width: 970px) {
+  .progress-stats {
+    flex-direction: row;
+    width: 100%;
+  }
+  .completed,
+  .active {
+    width: 100%;
+    height: 9vh;
+    gap: 0;
+  }
+
+  .complete-stats,
+  .active-stats {
+    width: 35.2vw;
+    gap: 1.3rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+  }
+  .stats {
+    height: auto;
+    width: 100% !important;
+  }
+  .percentage {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    height: 3.5vh;
+    font-size: 1.4rem;
+    width: 100%!important;
+    line-height: 2.5rem;
+  }
+
+  .description {
+    font-size: .69rem;
+    height: 2.7vh;
+    width: 100% !important;
+    display: flex;
+    line-height: 1rem;
+    justify-content: flex-start;
+  }
+
+  .icon {
+    width: 3rem;
+    height: auto;
+    margin: 0;
+    align-self: center;
+  }
+}
+
+@media (max-width: 450px) {
+  .description{
+    font-size: .55rem;
+  }
+}

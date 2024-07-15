@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\src",
+    "\\src\\app",
+    "\\src\\app\\components",
+    "\\src\\app\\components\\common",
+    "\\src\\app\\components\\common\\tasks",
+    "\\src\\app\\components\\common\\tasks\\task-list",
+    "\\src\\app\\components\\tasks",
+    "\\src\\app\\interceptor",
+    "\\src\\app\\services"
+  ],
+  "SelectedNode": "\\src\\app\\components\\common\\tasks\\task-list\\task-list.component.ts",
+  "PreviewInSolutionExplorer": false
+}
